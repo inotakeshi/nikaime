@@ -8,13 +8,22 @@
 	<form method="POST" action="RegistSerblet">
 		登録するＩＤ<input name="Id" type="text" ><br>
 		登録する名前<input name="Name" type="text" ><br>
-		<input name="sex" type="radio" value="男性">
-		<input name="sex" type="radio" value="女性">
+		<input name="sex" type="radio" value="男性">男性
+		<input name="sex" type="radio" value="女性">女性<br>
 		<input type="submit" value="とーろく">
 	</form>
+	<br>
 	<form method="POST" action="SerchSerblet">
 		検索するＩＤ<input name="Id" type="text" ><br>
 		<input type="submit" value="けんさく">
+	</form>
+	<br>
+	<form method="post" action="ListOutSerblet">
+		<input type="submit" value="全件表示">
+	</form>
+	<br>
+	<form method="post" action="EndSerblet">
+		<input type="submit" value="終了">
 	</form>
 </body>
 </html>

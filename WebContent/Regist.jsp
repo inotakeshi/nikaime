@@ -11,6 +11,9 @@
 	<%=bean.getKaiinId() %><br>
 	<%=bean.getKaiinName() %><br>
 	<%=bean.getTourokubi() %><br>
-	<%=bean.getSex() %>
+	<%=bean.getSex() %><br>
+	<form method="post" action="index.html">
+		<input type="submit" value="戻る">
+	</form>
 </body>
 </html>

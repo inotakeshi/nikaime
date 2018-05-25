@@ -38,15 +38,17 @@ public class SerchSerblet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
-
+		//HTMLから入力されたＩＤの受け取り
 		String serchIdStr=request.getParameter("Id");
+		//int型に型変換
 		int serchId=Integer.parseInt(serchIdStr);
+		//会員サービスのインスタンスの生成
 		KaiinServise ks=new KaiinServise();
-
+		//kaiinServiseのgetSerchを実行し戻り値としてSerchBeanを受け取る
 		request.setAttribute("bean", ks.getSerch(serchId));
+		//次に移動する先jspを設定
 		RequestDispatcher disp=request.getRequestDispatcher("/Serch.jsp");
+		//移動
 		disp.forward(request, response);
 	}
 

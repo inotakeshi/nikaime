@@ -3,7 +3,10 @@ package servise;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
+import bean.KaiinListBean;
+import bean.ListOutBean;
 import bean.RegistBean;
 import bean.SerchBean;
 import dao.Dao;
@@ -60,5 +63,29 @@ public class KaiinServise {
 			e.printStackTrace();
 		}
 		return rb;
+	}
+	public ListOutBean getListKaiin()
+	{
+		ListOutBean lb=new ListOutBean();
+		try(Connection con=Dao.getConnection();)
+		{
+			KaiinMgr mgr=new KaiinMgr(con);
+			List<KaiinVo> returnList=mgr.getListOut();
+			for(KaiinVo kv:returnList)
+			{
+				KaiinListBean klb=new KaiinListBean();
+				klb.setKaiinId(kv.getKaiinnum());
+				klb.setKaiinName(kv.getKaiinname());
+				//klb.setSexEnum(klb.getSexEnum());
+				klb.setTourokubi(klb.getTourokubi());
+
+				lb.setKaiin(klb);
+			}
+
+		} catch (ClassNotFoundException | SQLException e) {
+
+			e.printStackTrace();
+		}
+		return lb;
 	}
 }

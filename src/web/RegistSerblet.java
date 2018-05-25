@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.RegistBean;
 import servise.KaiinServise;
 
 /**
@@ -41,18 +40,17 @@ public class RegistSerblet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		RegistBean rb;
+		//HTMLから値を取得
 		String registIdStr=request.getParameter("Id");
 		String registName=request.getParameter("Name");
 		String registSex=request.getParameter("sex");
-		
+		//int型に変換
 		int registId=Integer.parseInt(registIdStr);
-
+		//KaiinServiseインスタンスの生成
 		KaiinServise ks=new KaiinServise();
 
-		rb=ks.setKaiin(registId, registName, registSex);
 
-		request.setAttribute("bean", rb);
+		request.setAttribute("bean",ks.setKaiin(registId, registName, registSex));
 
 		RequestDispatcher disp=request.getRequestDispatcher("/Regist.jsp");
 		disp.forward(request, response);

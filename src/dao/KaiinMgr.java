@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
@@ -111,6 +113,39 @@ public class KaiinMgr extends Dao{
 		catch (MySQLIntegrityConstraintViolationException e) {
 			System.out.println("入力した会員番号は既に使用されています");
 		}
+	}
+	public List<KaiinVo> getListOut() throws SQLException
+	{
+		PreparedStatement stmt = null;
+		ResultSet rset = null;
+
+		List<KaiinVo>kvList=new ArrayList<KaiinVo>();
+		try {
+
+			/* Statkentの作成 */
+			stmt = con.prepareStatement(ALL_SQL);
+
+			/* ｓｑｌ実行 */
+			rset = stmt.executeQuery();
+
+			/* 取得したデータを表示します。 */
+			while (rset.next()) {
+				KaiinVo k = new KaiinVo();
+				//k.setkployeeid(rset.getInt("kPLOYEEID") );
+				k.setKaiinnum		(rset.getInt(1));
+				k.setKaiinname		(rset.getString(2));
+				k.setTourokubi		(rset.getDate(3));
+				k.setSex			(rset.getString(4));
+				//Systk.out.println(rset.getString(1));
+				kvList.add(k);
+			}
+		}
+
+		catch (SQLException e) {
+			throw e;
+		}
+
+		return kvList;
 	}
 
 	// 会員情報を全件取得
