@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.SerchBean;
 import servise.KaiinServise;
 
 /**
@@ -41,12 +40,12 @@ public class SerchSerblet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		SerchBean sb;
+
 		String serchIdStr=request.getParameter("Id");
 		int serchId=Integer.parseInt(serchIdStr);
 		KaiinServise ks=new KaiinServise();
-		sb= ks.getSerch(serchId);
-		request.setAttribute("bean", sb);
+
+		request.setAttribute("bean", ks.getSerch(serchId));
 		RequestDispatcher disp=request.getRequestDispatcher("/Serch.jsp");
 		disp.forward(request, response);
 	}

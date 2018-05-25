@@ -8,6 +8,7 @@ import bean.RegistBean;
 import bean.SerchBean;
 import dao.Dao;
 import dao.KaiinMgr;
+import domain.SexEnum;
 import vo.KaiinVo;
 
 public class KaiinServise {
@@ -26,6 +27,7 @@ public class KaiinServise {
 			sb.setKaiinId(kv.getKaiinnum());
 			sb.setKaiinName(kv.getKaiinname());
 			sb.setTourokubi(kv.getTourokubi());
+			sb.setSexEnum(SexEnum.valueOf(kv.getSex()));
 
 		} catch (ClassNotFoundException | SQLException e) {
 
