@@ -16,7 +16,7 @@ import servise.KaiinServise;
  */
 @WebServlet("/RegistSerblet")
 public class RegistSerblet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,35 +26,36 @@ public class RegistSerblet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
-		//HTMLから値を取得
-		String registIdStr=request.getParameter("Id");
-		String registName=request.getParameter("Name");
-		String registSex=request.getParameter("sex");
-		//int型に変換
-		int registId=Integer.parseInt(registIdStr);
-		//KaiinServiseインスタンスの生成
-		KaiinServise ks=new KaiinServise();
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        //doGet(request, response);
+        //HTMLから値を取得
+        String registIdStr=request.getParameter("Id");
+        String registName =request.getParameter("Name");
+        //String registSex=request.getParameter("sex");
+        String registSex = new String(request.getParameter("sex").getBytes("iso-8859-1"),"UTF-8");
+        //int型に変換
+        int registId=Integer.parseInt(registIdStr);
+        //KaiinServiseインスタンスの生成
+        KaiinServise ks=new KaiinServise();
 
 
-		request.setAttribute("bean",ks.setKaiin(registId, registName, registSex));
+        request.setAttribute("bean",ks.setKaiin(registId, registName, registSex));
 
-		RequestDispatcher disp=request.getRequestDispatcher("/Regist.jsp");
-		disp.forward(request, response);
+        RequestDispatcher disp=request.getRequestDispatcher("/Regist.jsp");
+        disp.forward(request, response);
 
-	}
+    }
 
 }

@@ -36,7 +36,7 @@ public class KaiinServise {
             sb.setKaiinId(kv.getKaiinnum());
             sb.setKaiinName(kv.getKaiinname());
             sb.setTourokubi(kv.getTourokubi());
-            //sb.setSex(kv.getSex());
+            //serchBeanのse(列挙型)
             sb.setSexEnum(SexEnum.valueOf(kv.getSex()));
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -47,10 +47,11 @@ public class KaiinServise {
         return sb;
 
     }
-    public RegistBean setKaiin(int id,String name,String sex)
+    public ListOutBean setKaiin(int id,String name,String sex)
     {
 
         RegistBean rb=new RegistBean();
+        ListOutBean lob;
         try(Connection con=Dao.getConnection();
                 )
         {
@@ -59,6 +60,7 @@ public class KaiinServise {
             kv.setKaiinnum(id);
             kv.setKaiinname(name);
             kv.setTourokubi(new java.sql.Date(new Date().getTime()));
+            //System.out.println(sex);
             kv.setSe(SexEnum.valueOf(sex));
 
             km.registKaiin(kv);
@@ -66,12 +68,38 @@ public class KaiinServise {
             rb.setKaiinName(kv.getKaiinname());
             rb.setTourokubi(kv.getTourokubi());
             rb.setSex(kv.getSe().name());
+            lob=getListKaiin(con);
         } catch (ClassNotFoundException | SQLException e) {
 
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return rb;
+        return lob;
+    }
+    public ListOutBean getListKaiin(Connection con)
+    {
+        ListOutBean lb=new ListOutBean();
+        try
+        {
+            KaiinMgr mgr=new KaiinMgr(con);
+            List<KaiinVo> returnList=mgr.getListOut();
+            for(KaiinVo kv:returnList)
+            {
+                KaiinListBean klb=new KaiinListBean();
+                klb.setKaiinId(kv.getKaiinnum());
+                klb.setKaiinName(kv.getKaiinname());
+                klb.setSexEnum(klb.getSexEnum());
+                klb.setTourokubi(klb.getTourokubi());
+
+                lb.setKaiin(klb);
+            }
+
+        } catch ( SQLException e) {
+
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return lb;
     }
     public ListOutBean getListKaiin()
     {

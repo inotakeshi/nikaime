@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
+import domain.SexEnum;
 //import data.Kaiin;
 import vo.KaiinVo;
 
@@ -82,7 +83,8 @@ public class KaiinMgr extends Dao{
                 k.setKaiinnum		(rset.getInt(1));
                 k.setKaiinname		(rset.getString(2));
                 k.setTourokubi		(rset.getDate(3));
-                k.setSex			(rset.getString(4));
+                //kaiinVoにSQLの結果
+                k.setSe			(SexEnum.valueOf(rset.getString(4)) );
                 //Systk.out.println(rset.getString(1));
             }
         }
@@ -135,7 +137,7 @@ public class KaiinMgr extends Dao{
                 k.setKaiinnum		(rset.getInt(1));
                 k.setKaiinname		(rset.getString(2));
                 k.setTourokubi		(rset.getDate(3));
-                k.setSex			(rset.getString(4));
+                k.setSe			(SexEnum.valueOf(rset.getString(4)) );
 
                 //Systk.out.println(rset.getString(1));
                 kvList.add(k);
