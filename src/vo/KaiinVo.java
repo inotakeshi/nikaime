@@ -6,6 +6,8 @@ package vo;
  */
 import java.io.Serializable;
 
+import domain.SexEnum;
+
 /**
  * KaiinVo.
  * @author takeshi.ino
@@ -16,72 +18,80 @@ import java.io.Serializable;
  */
 public class KaiinVo implements Serializable{
 
-	public static final String TABLE = "KAIIN";
+    public static final String TABLE = "KAIIN";
 
-	/**
-	 * kaiinNum:int(10) <Primary Key>
-	 */
-	private int kaiinnum;
+    /**
+     * kaiinNum:int(10) <Primary Key>
+     */
+    private int kaiinnum;
 
-	/**
-	 * kaiinName:varchar(200)
-	 */
-	private String kaiinname;
+    /**
+     * kaiinName:varchar(200)
+     */
+    private String kaiinname;
 
-	/**
-	 * tourokubi:date(0)
-	 */
-	private java.sql.Date tourokubi;
+    /**
+     * tourokubi:date(0)
+     */
+    private java.sql.Date tourokubi;
 
-	/**
-	 * sex:varchar(45)
-	 */
-	private String sex;
+    /**
+     * sex:varchar(45)
+     */
+    private String sex;
 
-	//private SexEnum se;
+    private SexEnum se;
 
-	/**
-	* Constractor
-	*/
-	public KaiinVo(){}
+    public SexEnum getSe() {
+        return se;
+    }
 
-	/**
-	* Constractor
-	* @param <code>kaiinnum</code>
-	*/
-	public KaiinVo(int kaiinnum){
-		this.kaiinnum = kaiinnum;
-	}
+    public void setSe(SexEnum se) {
+        this.se = se;
+    }
 
-	public int getKaiinnum(){ return this.kaiinnum; }
+    /**
+    * Constractor
+    */
+    public KaiinVo(){}
 
-	public void setKaiinnum(int kaiinnum){ this.kaiinnum = kaiinnum; }
+    /**
+    * Constractor
+    * @param <code>kaiinnum</code>
+    */
+    public KaiinVo(int kaiinnum){
+        this.kaiinnum = kaiinnum;
+    }
 
-	public String getKaiinname(){ return this.kaiinname; }
+    public int getKaiinnum(){ return this.kaiinnum; }
 
-	public void setKaiinname(String kaiinname){ this.kaiinname = kaiinname; }
+    public void setKaiinnum(int kaiinnum){ this.kaiinnum = kaiinnum; }
 
-	public java.sql.Date getTourokubi(){ return this.tourokubi; }
+    public String getKaiinname(){ return this.kaiinname; }
 
-	public void setTourokubi(java.sql.Date tourokubi){ this.tourokubi = tourokubi; }
+    public void setKaiinname(String kaiinname){ this.kaiinname = kaiinname; }
 
-	public String getSex(){ return sex; }
+    public java.sql.Date getTourokubi(){ return this.tourokubi; }
 
-	public void setSex(String sex){ this.sex=sex; }
+    public void setTourokubi(java.sql.Date tourokubi){ this.tourokubi = tourokubi; }
 
-	public String toString(){
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("[KaiinVo:");
-		buffer.append(" kaiinnum: ");
-		buffer.append(kaiinnum);
-		buffer.append(" kaiinname: ");
-		buffer.append(kaiinname);
-		buffer.append(" tourokubi: ");
-		buffer.append(tourokubi);
-		buffer.append(" sex: ");
-		buffer.append(sex);
-		buffer.append("]");
-		return buffer.toString();
-	}
+    public String getSex(){ return sex; }
+
+    public void setSex(String sex){ this.sex=sex; }
+
+    public String toString(){
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("[KaiinVo:");
+        buffer.append(" kaiinnum: ");
+        buffer.append(kaiinnum);
+        buffer.append(" kaiinname: ");
+        buffer.append(kaiinname);
+        buffer.append(" tourokubi: ");
+        buffer.append(tourokubi);
+        buffer.append(" sex: ");
+        buffer.append(sex);
+        buffer.append("]");
+        return buffer.toString();
+    }
 
 }

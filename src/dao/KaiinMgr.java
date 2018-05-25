@@ -14,31 +14,31 @@ import vo.KaiinVo;
 
 public class KaiinMgr extends Dao{
 
-	public KaiinMgr(Connection con) {
-		super(con);
-	}
+    public KaiinMgr(Connection con) {
+        super(con);
+    }
 
-	final static String INSERT_SQL = "INSERT INTO " +
-			"kaiin " +
-			"( kaiinNum " +
-			",kaiinname " +
-			",tourokubi  " +
-			",sex )"+
-			"VALUES (?, ?, ?, ?);";
+    final static String INSERT_SQL = "INSERT INTO " +
+            "kaiin " +
+            "( kaiinNum " +
+            ",kaiinname " +
+            ",tourokubi  " +
+            ",sex )"+
+            "VALUES (?, ?, ?, ?);";
 
-	final static String SEARCH_SQL = "SELECT " +
-			"* " +
-			"FROM " +
-			"kaiin " +
-			"WHERE " +
-			"kaiinNum = ?;";
+    final static String SEARCH_SQL = "SELECT " +
+            "* " +
+            "FROM " +
+            "kaiin " +
+            "WHERE " +
+            "kaiinNum = ?;";
 
-	final static String ALL_SQL = "SELECT " +
-			"* " +
-			"FROM " +
-			"kaiin ;";
+    final static String ALL_SQL = "SELECT " +
+            "* " +
+            "FROM " +
+            "kaiin ;";
 
-	// 会員登録
+    // 会員登録
 //	public void addKaiin(Kaiin k, Connection con) throws SQLException {
 //
 //		PreparedStatement stmt = null;
@@ -59,96 +59,97 @@ public class KaiinMgr extends Dao{
 //
 //	}
 
-	// idから会員情報を表示
-	public KaiinVo searchKaiin(int i) throws SQLException {
-		PreparedStatement stmt = null;
-		ResultSet rset = null;
-		KaiinVo k = null;
+    // idから会員情報を表示
+    public KaiinVo searchKaiin(int i) throws SQLException {
+        PreparedStatement stmt = null;
+        ResultSet rset = null;
+        KaiinVo k = new KaiinVo();
 
-		try {
+        try {
 
-			/* Statkentの作成 */
-			stmt = con.prepareStatement(SEARCH_SQL);
+            /* Statkentの作成 */
+            stmt = con.prepareStatement(SEARCH_SQL);
+            //検索するIDを登録
+            stmt.setInt(1, i);
 
-			stmt.setInt(1, i);
+            /* ｓｑｌ実行 */
+            rset = stmt.executeQuery();
 
-			/* ｓｑｌ実行 */
-			rset = stmt.executeQuery();
+            /* 取得したデータをKaiinVoに登録 */
+            while (rset.next()) {
 
-			/* 取得したデータを表示します。 */
-			while (rset.next()) {
+                //k.setkployeeid(rset.getInt("kPLOYEEID") );
+                k.setKaiinnum		(rset.getInt(1));
+                k.setKaiinname		(rset.getString(2));
+                k.setTourokubi		(rset.getDate(3));
+                k.setSex			(rset.getString(4));
+                //Systk.out.println(rset.getString(1));
+            }
+        }
 
-				//k.setkployeeid(rset.getInt("kPLOYEEID") );
-				k.setKaiinnum		(rset.getInt(1));
-				k.setKaiinname		(rset.getString(2));
-				k.setTourokubi		(rset.getDate(3));
-				k.setSex			(rset.getString(4));
-				//Systk.out.println(rset.getString(1));
-			}
-		}
+        catch (SQLException e) {
+            throw e;
+        }
 
-		catch (SQLException e) {
-			throw e;
-		}
+        return k;
+    }
+    public void registKaiin(KaiinVo kv) throws SQLException {
+        PreparedStatement stmt = null;
+        ResultSet rset = null;
 
-		return k;
-	}
-	public void registKaiin(KaiinVo kv) throws SQLException {
-		PreparedStatement stmt = null;
-		ResultSet rset = null;
+        try {
 
-		try {
+            /* Statkentの作成 */
+            stmt = con.prepareStatement(INSERT_SQL);
 
-			/* Statkentの作成 */
-			stmt = con.prepareStatement(INSERT_SQL);
+            stmt.setInt		(1, kv.getKaiinnum());
+            stmt.setString	(2, kv.getKaiinname());
+            stmt.setDate	(3, kv.getTourokubi());
+            stmt.setString	(4, kv.getSe().name());
+            @SuppressWarnings("unused")
+            int num=stmt.executeUpdate();
 
-			stmt.setInt		(1, kv.getKaiinnum());
-			stmt.setString	(2, kv.getKaiinname());
-			stmt.setDate	(3, kv.getTourokubi());
-			stmt.setString	(4, kv.getSex());
-			@SuppressWarnings("unused")
-			int num=stmt.executeUpdate();
+        }
+        catch (MySQLIntegrityConstraintViolationException e) {
+            System.out.println("入力した会員番号は既に使用されています");
+        }
+    }
+    public List<KaiinVo> getListOut() throws SQLException
+    {
+        PreparedStatement stmt = null;
+        ResultSet rset = null;
 
-		}
-		catch (MySQLIntegrityConstraintViolationException e) {
-			System.out.println("入力した会員番号は既に使用されています");
-		}
-	}
-	public List<KaiinVo> getListOut() throws SQLException
-	{
-		PreparedStatement stmt = null;
-		ResultSet rset = null;
+        List<KaiinVo>kvList=new ArrayList<KaiinVo>();
+        try {
 
-		List<KaiinVo>kvList=new ArrayList<KaiinVo>();
-		try {
+            /* Statkentの作成 */
+            stmt = con.prepareStatement(ALL_SQL);
 
-			/* Statkentの作成 */
-			stmt = con.prepareStatement(ALL_SQL);
+            /* ｓｑｌ実行 */
+            rset = stmt.executeQuery();
 
-			/* ｓｑｌ実行 */
-			rset = stmt.executeQuery();
+            /* 取得したデータを表示します。 */
+            while (rset.next()) {
+                KaiinVo k = new KaiinVo();
+                //k.setkployeeid(rset.getInt("kPLOYEEID") );
+                k.setKaiinnum		(rset.getInt(1));
+                k.setKaiinname		(rset.getString(2));
+                k.setTourokubi		(rset.getDate(3));
+                k.setSex			(rset.getString(4));
 
-			/* 取得したデータを表示します。 */
-			while (rset.next()) {
-				KaiinVo k = new KaiinVo();
-				//k.setkployeeid(rset.getInt("kPLOYEEID") );
-				k.setKaiinnum		(rset.getInt(1));
-				k.setKaiinname		(rset.getString(2));
-				k.setTourokubi		(rset.getDate(3));
-				k.setSex			(rset.getString(4));
-				//Systk.out.println(rset.getString(1));
-				kvList.add(k);
-			}
-		}
+                //Systk.out.println(rset.getString(1));
+                kvList.add(k);
+            }
+        }
 
-		catch (SQLException e) {
-			throw e;
-		}
+        catch (SQLException e) {
+            throw e;
+        }
 
-		return kvList;
-	}
+        return kvList;
+    }
 
-	// 会員情報を全件取得
+    // 会員情報を全件取得
 //	public List<Kaiin> allKaiin(Connection con) throws SQLException {
 //
 //		PreparedStatement stmt = null;
