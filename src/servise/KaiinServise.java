@@ -62,8 +62,8 @@ public class KaiinServise {
             kv.setTourokubi(new java.sql.Date(new Date().getTime()));
             //System.out.println(sex);
             kv.setSe(SexEnum.valueOf(sex));
-
             km.registKaiin(kv);
+
             rb.setKaiinId(kv.getKaiinnum());
             rb.setKaiinName(kv.getKaiinname());
             rb.setTourokubi(kv.getTourokubi());
@@ -76,6 +76,7 @@ public class KaiinServise {
         }
         return lob;
     }
+
     public ListOutBean getListKaiin(Connection con)
     {
         ListOutBean lb=new ListOutBean();
@@ -88,8 +89,8 @@ public class KaiinServise {
                 KaiinListBean klb=new KaiinListBean();
                 klb.setKaiinId(kv.getKaiinnum());
                 klb.setKaiinName(kv.getKaiinname());
-                klb.setSexEnum(klb.getSexEnum());
-                klb.setTourokubi(klb.getTourokubi());
+                klb.setSexEnum(kv.getSe());
+                klb.setTourokubi(kv.getTourokubi());
 
                 lb.setKaiin(klb);
             }
@@ -101,7 +102,8 @@ public class KaiinServise {
         }
         return lb;
     }
-    public ListOutBean getListKaiin()
+
+    public ListOutBean getListKaiinD()
     {
         ListOutBean lb=new ListOutBean();
         try(Connection con=Dao.getConnection();)
@@ -113,8 +115,8 @@ public class KaiinServise {
                 KaiinListBean klb=new KaiinListBean();
                 klb.setKaiinId(kv.getKaiinnum());
                 klb.setKaiinName(kv.getKaiinname());
-                klb.setSexEnum(klb.getSexEnum());
-                klb.setTourokubi(klb.getTourokubi());
+                klb.setSexEnum(kv.getSe());
+                klb.setTourokubi(kv.getTourokubi());
 
                 lb.setKaiin(klb);
             }
