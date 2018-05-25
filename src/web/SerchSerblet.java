@@ -41,7 +41,7 @@ public class SerchSerblet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		SerchBean sb=new SerchBean();
+		SerchBean sb;
 		String serchIdStr=request.getParameter("Id");
 		int serchId=Integer.parseInt(serchIdStr);
 		KaiinServise ks=new KaiinServise();

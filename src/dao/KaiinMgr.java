@@ -10,18 +10,19 @@ import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 //import data.Kaiin;
 import vo.KaiinVo;
 
-public class KaiinMgr {
+public class KaiinMgr extends Dao{
 
-	public KaiinMgr() {
-
+	public KaiinMgr(Connection con) {
+		super(con);
 	}
 
 	final static String INSERT_SQL = "INSERT INTO " +
 			"kaiin " +
-			"( kaiinNo " +
-			",name " +
-			",registDate ) " +
-			"VALUES (?, ?, ?);";
+			"( kaiinNum " +
+			",kaiinname " +
+			",tourokubi  " +
+			",sex )"+
+			"VALUES (?, ?, ?, ?);";
 
 	final static String SEARCH_SQL = "SELECT " +
 			"* " +
@@ -57,10 +58,10 @@ public class KaiinMgr {
 //	}
 
 	// idから会員情報を表示
-	public KaiinVo searchKaiin(int i, Connection con) throws SQLException {
+	public KaiinVo searchKaiin(int i) throws SQLException {
 		PreparedStatement stmt = null;
 		ResultSet rset = null;
-		KaiinVo k = new KaiinVo();
+		KaiinVo k = null;
 
 		try {
 
@@ -90,27 +91,26 @@ public class KaiinMgr {
 
 		return k;
 	}
-	public KaiinVo registKaiin(int i, Connection con) throws SQLException {
+	public void registKaiin(KaiinVo kv) throws SQLException {
 		PreparedStatement stmt = null;
 		ResultSet rset = null;
-		KaiinVo k = new KaiinVo();
 
 		try {
 
 			/* Statkentの作成 */
 			stmt = con.prepareStatement(INSERT_SQL);
 
-			stmt.setInt		(1, k.getKaiinnum());
-			stmt.setString	(2, k.getKaiinname());
-			stmt.setDate	(3, new java.sql.Date(k.getTourokubi().getTime()));
-			stmt.setString	(4, k.getSex());
+			stmt.setInt		(1, kv.getKaiinnum());
+			stmt.setString	(2, kv.getKaiinname());
+			stmt.setDate	(3, kv.getTourokubi());
+			stmt.setString	(4, kv.getSex());
 			@SuppressWarnings("unused")
 			int num=stmt.executeUpdate();
+
 		}
 		catch (MySQLIntegrityConstraintViolationException e) {
 			System.out.println("入力した会員番号は既に使用されています");
 		}
-		return k;
 	}
 
 	// 会員情報を全件取得

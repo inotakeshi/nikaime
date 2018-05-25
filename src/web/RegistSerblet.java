@@ -41,14 +41,19 @@ public class RegistSerblet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		RegistBean rb=new RegistBean();
+		RegistBean rb;
 		String registIdStr=request.getParameter("Id");
-		String registName=request.getParameter("name");
+		String registName=request.getParameter("Name");
 		String registSex=request.getParameter("sex");
+		
 		int registId=Integer.parseInt(registIdStr);
+
 		KaiinServise ks=new KaiinServise();
+
 		rb=ks.setKaiin(registId, registName, registSex);
+
 		request.setAttribute("bean", rb);
+
 		RequestDispatcher disp=request.getRequestDispatcher("/Regist.jsp");
 		disp.forward(request, response);
 
